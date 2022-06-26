@@ -5,8 +5,11 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 
+# 声明地址
+graph_def_file = "F:/tmp/output_graph.pb"
+
 with tf.Session() as sess:
-    with open('F:/tmp/output_graph.pb', 'rb') as f:
+    with open(graph_def_file, 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
 
