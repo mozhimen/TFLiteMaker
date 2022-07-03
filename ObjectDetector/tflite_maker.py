@@ -1,8 +1,8 @@
-from tflite_model_maker.config import QuantizationConfig
-from tflite_model_maker.config import ExportFormat
+# coding=utf-8
 from tflite_model_maker import model_spec
 from tflite_model_maker import object_detector
 import tensorflow as tf
+import time
 
 # 版本检测
 assert tf.__version__.startswith('2')
@@ -41,6 +41,7 @@ spec.input_image_shape = def_shape_input_images
 model = object_detector.create(train_data, model_spec=spec, batch_size=def_size_batch, train_whole_model=True,
                                validation_data=valide_data, epochs=def_num_epochs)
 model.summary()
+print('TFLiteMaker>>>>>', 'output model success')
 
 # 评估测试集
 loss, accuracy = model.evaluate(test_data)
@@ -48,8 +49,10 @@ print('TFLiteMaker>>>>>', 'loss: ', loss, 'accuracy: ', accuracy)
 
 # 导出模型
 model.export(export_dir=def_path_output_tflite)
+print('TFLiteMaker>>>>>', 'export model success')
 
-# start = time.time()
-# print(model.evaluate_tflite(def_path_output_tflite+'/model.tflite', test_data))
-# end = time.time() 
-# print('TFLiteMaker>>>>>', 'elapsed time: ', end - start)
+# 模型测试集评估
+start = time.time()
+print(model.evaluate_tflite(def_path_output_tflite+'/model.tflite', test_data))
+end = time.time()
+print('TFLiteMaker>>>>>', 'elapsed time: ', end - start)
