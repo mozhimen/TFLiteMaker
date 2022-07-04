@@ -43,6 +43,6 @@ model.export(export_dir=def_path_output_tflite, export_format=(ExportFormat.TFLI
 print('TFLiteMaker>>>>>', 'export model success')
 
 start = time.time()
-print(model.evaluate_tflite(def_path_output_tflite+'/model.tflite', test_data))
+print('TFLiteMaker>>>>>', model.evaluate_tflite(def_path_output_tflite+'/model.tflite', test_data))
 end = time.time()
 print('TFLiteMaker>>>>>', 'elapsed time: ', end - start)

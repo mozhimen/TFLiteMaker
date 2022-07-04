@@ -1,5 +1,4 @@
 # coding=utf-8
-from tflite_model_maker import model_spec
 from tflite_model_maker import object_detector
 import tensorflow as tf
 import time
@@ -13,10 +12,11 @@ def_path_train = './VOC2007_train'
 def_path_valide = './VOC2007_valide'
 def_path_test = './VOC2007_test'
 def_type_classes = {1: 'your_label'}
-def_type_model = 'efficientdet_lite0'
+def_type_model = 'efficientdet-lite0'
 def_shape_input_images = [512, 288]
 def_size_batch = 16  # 5k样本可以设置在32, 1w数据集可以设128, 以此类推
 def_num_epochs = 10  # 一般情况下batch_size=32, epoches=10, batch_size=64, epoches=20
+def_depth_image = 8000  # 一张图片的最大探测次数，和def_shape_input_images有关
 
 # 划分数据集
 train_imgs_dir = def_path_train + '/JPEGImages'
@@ -33,9 +33,10 @@ valide_data = object_detector.DataLoader.from_pascal_voc(valide_imgs_dir, valide
 test_data = object_detector.DataLoader.from_pascal_voc(test_imgs_dir, test_Anno_dir, def_type_classes)
 
 # 导入预制模型
-spec = model_spec.get(def_type_model)
-spec.uri = 'https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite0/feature-vector/1.tar.gz'
-spec.input_image_shape = def_shape_input_images
+spec = object_detector.EfficientDetSpec(
+    model_name=def_type_model,
+    uri='https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite0/feature-vector/1.tar.gz',
+    hparams={'max_instances_per_image': def_depth_image})
 
 # 开始训练
 model = object_detector.create(train_data, model_spec=spec, batch_size=def_size_batch, train_whole_model=True,
@@ -44,8 +45,7 @@ model.summary()
 print('TFLiteMaker>>>>>', 'output model success')
 
 # 评估测试集
-loss, accuracy = model.evaluate(test_data)
-print('TFLiteMaker>>>>>', 'loss: ', loss, 'accuracy: ', accuracy)
+print('TFLiteMaker>>>>>', model.evaluate(test_data))
 
 # 导出模型
 model.export(export_dir=def_path_output_tflite)
@@ -53,6 +53,6 @@ print('TFLiteMaker>>>>>', 'export model success')
 
 # 模型测试集评估
 start = time.time()
-print(model.evaluate_tflite(def_path_output_tflite+'/model.tflite', test_data))
+print('TFLiteMaker>>>>>', model.evaluate_tflite(def_path_output_tflite + '/model.tflite', test_data))
 end = time.time()
 print('TFLiteMaker>>>>>', 'elapsed time: ', end - start)
