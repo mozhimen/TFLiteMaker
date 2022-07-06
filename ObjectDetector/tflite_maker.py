@@ -6,6 +6,28 @@ import time
 # 版本检测
 assert tf.__version__.startswith('2')
 
+# 常量(五种模型的预制地址)
+def_url_lite0 = 'https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite0/feature-vector/1.tar.gz'
+def_url_lite1 = 'https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite1/feature-vector/1.tar.gz'
+def_url_lite2 = 'https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite2/feature-vector/1.tar.gz'
+def_url_lite3 = 'https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite3/feature-vector/1.tar.gz'
+def_url_lite4 = 'https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite4/feature-vector/2.tar.gz'
+
+
+# 定义根据模型获得地址的函数
+def getModelUrl(type_model):
+    if type_model == 'efficientdet-lite0':
+        return def_url_lite0
+    elif type_model == 'efficientdet-lite1':
+        return def_url_lite1
+    elif type_model == 'efficientdet-lite2':
+        return def_url_lite2
+    elif type_model == 'efficientdet-lite3':
+        return def_url_lite3
+    else:
+        return def_url_lite4
+
+
 # 变量声明(便于你的个性化修改)
 def_path_output_tflite = './your_tflite_path'  # 你的输出tflite模型的地址
 def_path_train = './VOC2007_train'
@@ -13,6 +35,7 @@ def_path_valide = './VOC2007_valide'
 def_path_test = './VOC2007_test'
 def_type_classes = {1: 'your_label'}
 def_type_model = 'efficientdet-lite0'
+def_url_model = getModelUrl(def_type_model)
 def_shape_input_images = [512, 288]
 def_size_batch = 16  # 5k样本可以设置在32, 1w数据集可以设128, 以此类推
 def_size_max_detections = 200  # 可以处理返回的最大目标数
@@ -36,7 +59,7 @@ test_data = object_detector.DataLoader.from_pascal_voc(test_imgs_dir, test_Anno_
 # 导入预制模型
 spec = object_detector.EfficientDetSpec(
     model_name=def_type_model,
-    uri='https://storage.googleapis.com/tfhub-modules/tensorflow/efficientdet/lite0/feature-vector/1.tar.gz',
+    uri=def_url_model,
     hparams={'max_instances_per_image': def_depth_image},
     tflite_max_detections=def_size_max_detections)
 
