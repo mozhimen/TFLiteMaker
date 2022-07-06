@@ -37,7 +37,7 @@ def_type_classes = {1: 'your_label'}
 def_type_model = 'efficientdet-lite0'
 def_url_model = getModelUrl(def_type_model)
 def_shape_input_images = [512, 288]
-def_size_batch = 16  # 5k样本可以设置在32, 1w数据集可以设128, 以此类推
+def_size_batch = 4  # 根据你电脑的算力而定, 特别是GPU训练的时候, 5k样本可以设置在32, 1w数据集可以设128, 以此类推
 def_size_max_detections = 200  # 可以处理返回的最大目标数
 def_num_epochs = 10  # 一般情况下batch_size=32, epoches=10, batch_size=64, epoches=20
 def_depth_image = 8000  # 一张图片的最大探测次数，和def_shape_input_images有关
@@ -64,6 +64,7 @@ spec = object_detector.EfficientDetSpec(
     tflite_max_detections=def_size_max_detections)
 
 # 开始训练
+print('TFLiteMaker>>>>>', 'train start')
 model = object_detector.create(train_data, model_spec=spec, batch_size=def_size_batch, train_whole_model=True,
                                validation_data=valide_data, epochs=def_num_epochs)
 model.summary()

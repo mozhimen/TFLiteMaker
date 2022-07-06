@@ -29,6 +29,7 @@ inception_v3_spec = image_classifier.ModelSpec(
 inception_v3_spec.input_image_shape = def_shape_input_images
 
 # 开始训练
+print('TFLiteMaker>>>>>', 'train start')
 model = image_classifier.create(train_data, validation_data=validation_data, model_spec=inception_v3_spec,
                                 epochs=def_num_epochs)
 model.summary()
