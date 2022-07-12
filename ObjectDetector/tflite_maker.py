@@ -36,7 +36,6 @@ def_path_test = './VOC2007_test'
 def_type_classes = {1: 'your_label'}
 def_type_model = 'efficientdet-lite0'
 def_url_model = getModelUrl(def_type_model)
-def_shape_input_images = [512, 288]
 def_size_batch = 4  # 根据你电脑的算力而定, 特别是GPU训练的时候, 5k样本可以设置在32, 1w数据集可以设128, 以此类推
 def_size_max_detections = 200  # 可以处理返回的最大目标数
 def_num_epochs = 10  # 一般情况下batch_size=32, epoches=10, batch_size=64, epoches=20
@@ -70,12 +69,12 @@ model = object_detector.create(train_data, model_spec=spec, batch_size=def_size_
 model.summary()
 print('TFLiteMaker>>>>>', 'output model success')
 
-# 评估测试集
-print('TFLiteMaker>>>>>', model.evaluate(test_data))
-
 # 导出模型
 model.export(export_dir=def_path_output_tflite)
 print('TFLiteMaker>>>>>', 'export model success')
+
+# 评估测试集根据你电脑的算力
+# print('TFLiteMaker>>>>>', model.evaluate(test_data))
 
 # 模型测试集评估
 start = time.time()
