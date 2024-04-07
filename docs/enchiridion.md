@@ -115,6 +115,7 @@ python C:\Users\83524\Desktop\tflite_maker.py
 `np.object` was a deprecated alias for the builtin `object`. To avoid this error in existing code, use `object` by itself. Doing this will not modify any behavior and is safe.
 
 ```
+pip install optax==0.2.0
 pip install chex==0.1.7
 pip install numpy==1.23
 ```
