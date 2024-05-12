@@ -36,10 +36,9 @@ pip-> tflite_model_maker: 0.3.4
 ```
 
 2. Configuration
-
 - Python 3.8.10
 
->Link: 百度网盘
+> Link: 百度网盘
 
 ```
 # python 版本检查 3.8.10
@@ -92,7 +91,7 @@ TFLiteMaker>>>>> 2.8.0
 
 1. TFLiteMaker
 
->Link: Git
+> Link: Git
 
 - tfliite_maker.py
 
@@ -111,8 +110,8 @@ python C:\Users\83524\Desktop\tflite_maker.py
 
 - fix
 
->AttributeError: module 'numpy' has no attribute 'object'.
-`np.object` was a deprecated alias for the builtin `object`. To avoid this error in existing code, use `object` by itself. Doing this will not modify any behavior and is safe.
+> AttributeError: module 'numpy' has no attribute 'object'.
+> `np.object` was a deprecated alias for the builtin `object`. To avoid this error in existing code, use `object` by itself. Doing this will not modify any behavior and is safe.
 
 ```
 pip install optax==0.2.0
@@ -120,20 +119,47 @@ pip install chex==0.1.7
 pip install numpy==1.23
 ```
 
->Descriptors cannot not be created directly.
+> Descriptors cannot not be created directly.
 
 ```
 pip install protobuf==3.20.3
 ```
->ImportError: cannot import name 'array_record_module' from 'array_record.python' (C:\Users\83524\.conda\envs\tf-py39\lib\site-packages\array_record\python\__init__.py)
+
+> ImportError: cannot import name 'array_record_module' from 'array_record.python' (C:\Users\83524\.conda\envs\tf-py39\lib\site-packages\array_record\python\__init__.py)
+
 ```
 pip install tensorflow-datasets==4.8.3
 ```
->AttributeError: module 'tensorflow' has no attribute 'contrib'
+
+> AttributeError: module 'tensorflow' has no attribute 'contrib'
+
 ```
 pip install tensorflow_probability==0.12.2
 ```
+
+> OSError: SavedModel file does not exist at: C:\Users\83524\AppData\Local\Temp\tfhub_modules\c106d4a2062b29c07fe73ea1f71df60b605decb1/{saved_model.pbtxt|saved_model.pb}
+
+```
+删除掉目标文件夹即可
+```
+
+> AttributeError: module 'tensorflow.lite.python.schema_py_generated' has no attribute 'Model'
+
+```
+https://github.com/tensorflow/tensorflow/issues/44882
+
+
+我在 Windows 10 上使用 TensorFlow 2.4.1 和 python 3.7 时遇到了完全相同的问题，解压缩上述schema_py_generated.py.zip以替换我的 python 3.7 安装子文件夹 Python37\Lib\site-packages\tensorflow\lite\python 中现有的 0 字节文件schema_py_generated.py解决了这个问题。除非我真的必须这样做，否则我宁愿不使用夜间版本。
+
+谢
+
+谢！
+```
+
+
+
 ***
+
 - start
 
 ![](1.png)
@@ -188,6 +214,7 @@ TFLiteMaker>>>>> elapsed time:  1106.6446042060852
 ![](3.png)
 
 label list
+
 ```
 animals
 foods

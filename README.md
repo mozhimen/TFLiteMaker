@@ -26,9 +26,17 @@ TFLite构建工具(适配TFLiteLoader)
 
 ## 2. 环境
 
-OS: Ubuntu 20.0.4
+OS: Windows11
 
-Python: 3.8
+Python: 3.7
+
+Others: requirements
+
+CUDA: 11.0.1
+
+Cudnn: 8.0.5
+
+GPU: NAVIDIA 3060
 
 ***
 
@@ -70,7 +78,7 @@ python pb2tflite.py
 
 ### 2.3 Tools `Maker工具集合`
 
-> 1. tensorflow_version.py 查看tensorflow的版本
+- tensorflow_version.py 查看tensorflow的版本
 
 ## 4. 配套组件 
 
